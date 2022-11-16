@@ -1,13 +1,10 @@
 # Interfacing-Seven-segment-display-with-lpc2148
 
-Name:	
-Roll no 
-Date of experiment:
+Name: Kiran J
 
+Roll no: 212221240022 
 
-
-Ex. No. :
-Date: 
+Date of experiment: 10/11/2022
  
 
 ### Aim: To configure and display 4 character LED seven segment display and write a c code for displaying number 1 to 9 and A to F 
@@ -52,13 +49,44 @@ Sl no 	Hex code 	Output of LCD
         Figure -3 Circuit diagram of interfacing for LPX4 - CA
 
 ## Kiel - Program 
+~~~python
+#include <LPC214x.H>
+unsigned char dig[]= {0x88,0xeb,0x4c,0x49,0x2b,0x19,0x18,0xcb,0x8,0x9,0xa,0x38,0x9c,0x68,0x1c,0x1e};
 
+void delay(unsigned int count)
+{
+	int j=0,i=0;
+	for(j=0;j<count;j++)
+	{
+		for(i=0;i<120;i++);
+	}
+}
 
+int main(void)
+{
+	unsigned char count=0;
+	unsigned int i=0;
+	IO0DIR |= (1 << 11);
+	IO0SET |= (1 << 11);
+	IO0DIR |= 0x007F8000;
+	while(1)
+	{
+		count++;
+		if(count == 16)count=0;
+		for(i=0;i<800;i++)
+		{
+			IO0CLR = 0x007f8000;
+			IO0SET = (dig[count] << 15);
+			delay(200);
+		}
+  }
+}
+~~~
 
- 
-
+##  Output screen shots :
+![output](num.jpeg)
+![output](alph.jpeg)
+![output](b%26w.jpeg)
 
 ### Result :
 LED seven segment display is interfaced and displayed alpha numeric characters 
-
-##  Output screen shots :
